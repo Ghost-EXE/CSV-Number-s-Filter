@@ -64,7 +64,7 @@ public class gui extends javax.swing.JFrame {
         txta.setColumns(20);
         txta.setRows(5);
         txta.setAutoscrolls(false);
-        txta.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+        txta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(txta);
 
         javax.swing.GroupLayout BackpnlLayout = new javax.swing.GroupLayout(Backpnl);
@@ -189,7 +189,8 @@ public class gui extends javax.swing.JFrame {
 
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
-                    String answer = mass[i].replaceAll("[^0-9.]", "");
+                    String num = mass[i].replaceAll("[^0-9.]", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
                     if (!answer.equals("")) {
                         sb.append(answer);
                         if (i < mass.length) {
