@@ -131,7 +131,9 @@ public class gui extends javax.swing.JFrame {
             File file = jFileChooser1.getSelectedFile();
             String savefile = file.toString() + ".csv";
             try {
-                writeFile(savefile, contents);
+                //String num = contents.replaceAll("[^0-9.]", "");
+                //String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");      
+                writeFile(savefile);                
             } catch (IOException ex) {
                 Logger.getLogger(gui.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -208,10 +210,19 @@ public class gui extends javax.swing.JFrame {
 
     }
 
-    public static void writeFile(String savefile, String sb) throws IOException {
+    public void writeFile(String savefile) throws IOException {
+        String content = txta.getText();
+                
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(savefile, true))) {
-            bf.append(sb);
+              
             
+                    String num = content.replaceAll("[^0-9.;]", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                if (!answer.equals("")) {                    
+                    bf.append(answer);
+                    
+        }
+           
         } 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
