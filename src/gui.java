@@ -125,14 +125,11 @@ public class gui extends javax.swing.JFrame {
     }//GEN-LAST:event_FileSelectbtnActionPerformed
 
     private void savebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savebtnActionPerformed
-        String contents = txta.getText();
         int returnVal = jFileChooser1.showSaveDialog(this);
         if (returnVal == jFileChooser1.APPROVE_OPTION) {
             File file = jFileChooser1.getSelectedFile();
             String savefile = file.toString() + ".csv";
             try {
-                //String num = contents.replaceAll("[^0-9.]", "");
-                //String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");      
                 writeFile(savefile);                
             } catch (IOException ex) {
                 Logger.getLogger(gui.class.getName()).log(Level.SEVERE, null, ex);
@@ -186,7 +183,7 @@ public class gui extends javax.swing.JFrame {
 
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            br.readLine();// loeb rea aga ei tee midagi (esimene rida)
+            br.readLine();
             while ((line = br.readLine()) != null) {
 
                 String[] mass = line.split(cvsSplitBy);
