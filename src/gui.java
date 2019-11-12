@@ -28,7 +28,7 @@ public class gui extends javax.swing.JFrame {
         
     }
 
-    int sn = 1;
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,17 +180,12 @@ public class gui extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_savebtnActionPerformed
-
     private void rn1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rn1StateChanged
-        sn = 2;
     }//GEN-LAST:event_rn1StateChanged
-
     private void rn2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rn2StateChanged
-        sn = 3;   
+  
     }//GEN-LAST:event_rn2StateChanged
-
     private void rn0StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rn0StateChanged
-        sn = 1;
     }//GEN-LAST:event_rn0StateChanged
 
     /**
@@ -257,6 +252,7 @@ public class gui extends javax.swing.JFrame {
                 txta.setText(sb.toString());
             }
                if (rn1.isSelected()){
+                   boolean bo = false;
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
@@ -266,7 +262,8 @@ public class gui extends javax.swing.JFrame {
                     if (!answer.endsWith("5")){
                     if (!answer.endsWith("7")){
                     if (!answer.endsWith("9")){ 
-                    if (!answer.equals("")){ 
+                    if (!answer.equals("")){
+                        bo = true;
                         sb.append(answer);    
                         if (i < mass.length) {
                             sb.append(";");
@@ -274,11 +271,11 @@ public class gui extends javax.swing.JFrame {
                     }}}}}}
 
                 }
-
+                if (bo = true){
                 sb.append(System.lineSeparator());
                 txta.setText(sb.toString());
             } 
-     
+               }
            
         
             }
@@ -294,7 +291,8 @@ public class gui extends javax.swing.JFrame {
             
                     String num = content.replaceAll("[^0-9.;]", "");
                     String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
-                if (!answer.equals("")) {                    
+                if (!answer.equals("")) {
+                    bf.append(System.lineSeparator());
                     bf.append(answer);
                     
         }
