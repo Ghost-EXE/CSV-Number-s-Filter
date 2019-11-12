@@ -276,6 +276,31 @@ public class gui extends javax.swing.JFrame {
                 txta.setText(sb.toString());
             } 
                }
+               if (rn2.isSelected()){
+                   boolean bo = false;
+                String[] mass = line.split(cvsSplitBy);
+                for (int i = 0; i < mass.length; i++) {
+                    String num = mass[i].replaceAll("[^0-9.]", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    if (!answer.endsWith("2")){
+                    if (!answer.endsWith("4")){
+                    if (!answer.endsWith("6")){
+                    if (!answer.endsWith("8")){
+                    if (!answer.endsWith("0")){ 
+                    if (!answer.equals("")){
+                        bo = true;
+                        sb.append(answer);    
+                        if (i < mass.length) {
+                            sb.append(";");
+                        }
+                    }}}}}}
+
+                }
+                if (bo = true){
+                sb.append(System.lineSeparator());
+                txta.setText(sb.toString());
+            } 
+               }
            
         
             }
