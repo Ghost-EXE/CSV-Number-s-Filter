@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -48,6 +49,9 @@ public class gui extends javax.swing.JFrame {
         rn0 = new javax.swing.JRadioButton();
         rn1 = new javax.swing.JRadioButton();
         rn2 = new javax.swing.JRadioButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        output = new javax.swing.JTextArea();
+        filter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CSV Number Filter");
@@ -98,6 +102,17 @@ public class gui extends javax.swing.JFrame {
             }
         });
 
+        output.setColumns(20);
+        output.setRows(5);
+        jScrollPane2.setViewportView(output);
+
+        filter.setText("Filter");
+        filter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout BackpnlLayout = new javax.swing.GroupLayout(Backpnl);
         Backpnl.setLayout(BackpnlLayout);
         BackpnlLayout.setHorizontalGroup(
@@ -109,9 +124,12 @@ public class gui extends javax.swing.JFrame {
                     .addComponent(savebtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(rn0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(rn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(rn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(filter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         BackpnlLayout.setVerticalGroup(
@@ -119,19 +137,23 @@ public class gui extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BackpnlLayout.createSequentialGroup()
                 .addGroup(BackpnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(BackpnlLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(BackpnlLayout.createSequentialGroup()
                         .addGap(108, 108, 108)
                         .addComponent(rn0)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rn1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rn2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
-                        .addComponent(FileSelectbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                        .addComponent(FileSelectbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(savebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(savebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, BackpnlLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(BackpnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
         );
 
@@ -188,6 +210,17 @@ public class gui extends javax.swing.JFrame {
     private void rn0StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rn0StateChanged
     }//GEN-LAST:event_rn0StateChanged
 
+    private void filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterActionPerformed
+        String content = txta.getText();
+        StringBuilder sb = new StringBuilder();
+        sb.append(content);
+        try {
+                filter(sb);                
+            } catch (IOException ex) {
+                Logger.getLogger(gui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_filterActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -225,16 +258,39 @@ public class gui extends javax.swing.JFrame {
 
     }
 
-    public void readFromFile(String filename) throws FileNotFoundException, IOException {
+        public void readFromFile(String filename) throws FileNotFoundException, IOException {
         String line = "";
         String cvsSplitBy = ";";
 
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            br.readLine();
+            br.readLine();// loeb rea aga ei tee midagi (esimene rida)
             while ((line = br.readLine()) != null) {
-                
-                if (rn0.isSelected()){
+
+                String[] mass = line.split(cvsSplitBy);
+                for (int i = 0; i < mass.length; i++) {
+                    String answer = mass[i];
+                    if (!answer.equals("")) {
+                        sb.append(answer);
+                        if (i < mass.length) {
+                            sb.append(";");
+                        }
+                    }
+
+                }
+
+                sb.append(System.lineSeparator());
+
+            }
+        }
+        txta.setText(sb.toString());
+
+    }
+ 
+        public void filter(StringBuilder sb) throws FileNotFoundException, IOException{
+            String line = "";
+            String cvsSplitBy = ";";
+            if (rn0.isSelected()){
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
@@ -249,7 +305,7 @@ public class gui extends javax.swing.JFrame {
                 }
                 String end = sb.toString();
                 String tEnd = end.replaceAll("(.{16})", "$1\n");
-                txta.setText(tEnd);
+                output.setText(tEnd);
             }
                if (rn1.isSelected()){
                 String[] mass = line.split(cvsSplitBy);
@@ -272,7 +328,7 @@ public class gui extends javax.swing.JFrame {
                 }
                 String end = sb.toString();
                 String tEnd = end.replaceAll("(.{16})", "$1\n");
-                txta.setText(tEnd);
+                output.setText(tEnd);
              
                }
                if (rn2.isSelected()){
@@ -295,14 +351,19 @@ public class gui extends javax.swing.JFrame {
                 }
                 String end = sb.toString();
                 String tEnd = end.replaceAll("(.{16})", "$1\n");
-                txta.setText(tEnd);
+                output.setText(tEnd);
                }
            
         
             }
-        }
+        
        
-    }
+    
+
+
+        
+       
+    
 
     public void writeFile(String savefile) throws IOException {
         String content = txta.getText();
@@ -324,8 +385,11 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.JPanel Backpnl;
     private javax.swing.JButton FileSelectbtn;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton filter;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea output;
     private javax.swing.JRadioButton rn0;
     private javax.swing.JRadioButton rn1;
     private javax.swing.JRadioButton rn2;
