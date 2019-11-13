@@ -247,12 +247,11 @@ public class gui extends javax.swing.JFrame {
                     }
 
                 }
-
-                sb.append(System.lineSeparator());
-                txta.setText(sb.toString());
+                String end = sb.toString();
+                String tEnd = end.replaceAll("(.{16})", "$1\n");
+                txta.setText(tEnd);
             }
                if (rn1.isSelected()){
-                   boolean bo = false;
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
@@ -263,21 +262,20 @@ public class gui extends javax.swing.JFrame {
                     if (!answer.endsWith("7")){
                     if (!answer.endsWith("9")){ 
                     if (!answer.equals("")){
-                        bo = true;
                         sb.append(answer);    
                         if (i < mass.length) {
                             sb.append(";");
+                            
                         }
                     }}}}}}
 
                 }
-                if (bo = true){
-                sb.append(System.lineSeparator());
-                txta.setText(sb.toString());
-            } 
+                String end = sb.toString();
+                String tEnd = end.replaceAll("(.{16})", "$1\n");
+                txta.setText(tEnd);
+             
                }
                if (rn2.isSelected()){
-                   boolean bo = false;
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
@@ -288,7 +286,6 @@ public class gui extends javax.swing.JFrame {
                     if (!answer.endsWith("8")){
                     if (!answer.endsWith("0")){ 
                     if (!answer.equals("")){
-                        bo = true;
                         sb.append(answer);    
                         if (i < mass.length) {
                             sb.append(";");
@@ -296,10 +293,9 @@ public class gui extends javax.swing.JFrame {
                     }}}}}}
 
                 }
-                if (bo = true){
-                sb.append(System.lineSeparator());
-                txta.setText(sb.toString());
-            } 
+                String end = sb.toString();
+                String tEnd = end.replaceAll("(.{16})", "$1\n");
+                txta.setText(tEnd);
                }
            
         
@@ -317,8 +313,8 @@ public class gui extends javax.swing.JFrame {
                     String num = content.replaceAll("[^0-9.;]", "");
                     String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
                 if (!answer.equals("")) {
-                    bf.append(System.lineSeparator());
-                    bf.append(answer);
+                    String end = answer.replaceAll("(.{16})", "$1\n");
+                    bf.append(end);
                     
         }
            
