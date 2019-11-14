@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -21,15 +22,16 @@ import javax.swing.JButton;
  */
 public class gui extends javax.swing.JFrame {
 
+    ArrayList<String> contents = new ArrayList<>();
+
     /**
      * Creates new form gui
      */
     public gui() {
         initComponents();
-        
+
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,32 +195,76 @@ public class gui extends javax.swing.JFrame {
             File file = jFileChooser1.getSelectedFile();
             String savefile = file.toString() + ".csv";
             try {
-                writeFile(savefile);                
+                writeFile(savefile);
             } catch (IOException ex) {
                 Logger.getLogger(gui.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            
-            
         }
     }//GEN-LAST:event_savebtnActionPerformed
     private void rn1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rn1StateChanged
     }//GEN-LAST:event_rn1StateChanged
     private void rn2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rn2StateChanged
-  
+
     }//GEN-LAST:event_rn2StateChanged
     private void rn0StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rn0StateChanged
     }//GEN-LAST:event_rn0StateChanged
 
     private void filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterActionPerformed
-        String content = txta.getText();
+        String cvsSplitBy = ";";
         StringBuilder sb = new StringBuilder();
-        sb.append(content);
-        try {
-                filter(sb);                
-            } catch (IOException ex) {
-                Logger.getLogger(gui.class.getName()).log(Level.SEVERE, null, ex);
+        for (String line : contents) {
+            if (rn0.isSelected()) {
+                String[] mass = line.split(cvsSplitBy);
+                for (int i = 0; i < mass.length; i++) {
+                    String num = mass[i].replaceAll("[^0-9.]", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    sb.append(answer);
+                    if (i < mass.length - 1) {
+                        sb.append(";");
+                    }
+                }
+                sb.append(System.lineSeparator());
+                String end = sb.toString();
+                output.setText(end);
             }
+            if (rn1.isSelected()) {
+                String[] mass = line.split(cvsSplitBy);
+                for (int i = 0; i < mass.length; i++) {
+                    String num = mass[i].replaceAll("[^0-9.]", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    if (!num.equals("")
+                            && (Integer.parseInt(num) % 2) == 0) {
+                        sb.append(answer);
+                        if (i < mass.length - 1) {
+                            sb.append(";");
+                        }
+                    }
+                }
+                sb.append(System.lineSeparator());
+                String end = sb.toString();
+                output.setText(end);
+            }
+            if (rn2.isSelected()) {
+                String[] mass = line.split(cvsSplitBy);
+                for (int i = 0; i < mass.length; i++) {
+                    String num = mass[i].replaceAll("[^0-9.]", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+
+                    if (!num.equals("")
+                            && (Integer.parseInt(num) % 2) == 1//😵😵😵🤮🤢👌
+                            ) {
+                        sb.append(answer);
+                        if (i < mass.length - 1) {
+                            sb.append(";");
+                        }
+                    }
+                }
+                sb.append(System.lineSeparator());
+                String end = sb.toString();
+                output.setText(end);
+            }
+        }
     }//GEN-LAST:event_filterActionPerformed
 
     /**
@@ -258,23 +304,20 @@ public class gui extends javax.swing.JFrame {
 
     }
 
-        public void readFromFile(String filename) throws FileNotFoundException, IOException {
+    public void readFromFile(String filename) throws FileNotFoundException, IOException {
         String line = "";
         String cvsSplitBy = ";";
 
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            br.readLine();// loeb rea aga ei tee midagi (esimene rida)
             while ((line = br.readLine()) != null) {
-
+                contents.add(line);
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String answer = mass[i];
-                    if (!answer.equals("")) {
-                        sb.append(answer);
-                        if (i < mass.length) {
-                            sb.append(";");
-                        }
+                    sb.append(answer);
+                    if (i < mass.length - 1) {
+                        sb.append(";");
                     }
 
                 }
@@ -286,100 +329,13 @@ public class gui extends javax.swing.JFrame {
         txta.setText(sb.toString());
 
     }
- 
-        public void filter(StringBuilder sb) throws FileNotFoundException, IOException{
-            String line = "";
-            String cvsSplitBy = ";";
-            if (rn0.isSelected()){
-                String[] mass = line.split(cvsSplitBy);
-                for (int i = 0; i < mass.length; i++) {
-                    String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
-                    if (!answer.equals("")) {
-                        sb.append(answer);
-                        if (i < mass.length) {
-                            sb.append(";");
-                        }
-                    }
-
-                }
-                String end = sb.toString();
-                String tEnd = end.replaceAll("(.{16})", "$1\n");
-                output.setText(tEnd);
-            }
-               if (rn1.isSelected()){
-                String[] mass = line.split(cvsSplitBy);
-                for (int i = 0; i < mass.length; i++) {
-                    String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
-                    if (!answer.endsWith("1")){
-                    if (!answer.endsWith("3")){
-                    if (!answer.endsWith("5")){
-                    if (!answer.endsWith("7")){
-                    if (!answer.endsWith("9")){ 
-                    if (!answer.equals("")){
-                        sb.append(answer);    
-                        if (i < mass.length) {
-                            sb.append(";");
-                            
-                        }
-                    }}}}}}
-
-                }
-                String end = sb.toString();
-                String tEnd = end.replaceAll("(.{16})", "$1\n");
-                output.setText(tEnd);
-             
-               }
-               if (rn2.isSelected()){
-                String[] mass = line.split(cvsSplitBy);
-                for (int i = 0; i < mass.length; i++) {
-                    String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
-                    if (!answer.endsWith("2")){
-                    if (!answer.endsWith("4")){
-                    if (!answer.endsWith("6")){
-                    if (!answer.endsWith("8")){
-                    if (!answer.endsWith("0")){ 
-                    if (!answer.equals("")){
-                        sb.append(answer);    
-                        if (i < mass.length) {
-                            sb.append(";");
-                        }
-                    }}}}}}
-
-                }
-                String end = sb.toString();
-                String tEnd = end.replaceAll("(.{16})", "$1\n");
-                output.setText(tEnd);
-               }
-           
-        
-            }
-        
-       
-    
-
-
-        
-       
-    
 
     public void writeFile(String savefile) throws IOException {
-        String content = txta.getText();
-                
-        try (BufferedWriter bf = new BufferedWriter(new FileWriter(savefile, true))) {
-              
-            
-                    String num = content.replaceAll("[^0-9.;]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
-                if (!answer.equals("")) {
-                    String end = answer.replaceAll("(.{16})", "$1\n");
-                    bf.append(end);
-                    
+        String content = output.getText();
+
+        try (FileWriter bf = new FileWriter(savefile)) {
+            bf.append(content);
         }
-           
-        } 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Backpnl;
@@ -396,8 +352,5 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.JButton savebtn;
     private javax.swing.JTextArea txta;
     // End of variables declaration//GEN-END:variables
-
-
-
 
 }
