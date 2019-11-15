@@ -1,6 +1,5 @@
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -218,10 +215,10 @@ public class gui extends javax.swing.JFrame {
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", " ");
                     sb.append(answer);
-                    if (i < mass.length - 1) {
-                        sb.append(";");
+                    if (i == mass.length - 1) {
+                        sb.append(" ");
                     }
                 }
                 sb.append(System.lineSeparator());
@@ -232,31 +229,32 @@ public class gui extends javax.swing.JFrame {
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", " ");
                     if (!num.equals("")
                             && (Integer.parseInt(num) % 2) == 0) {
                         sb.append(answer);
-                        if (i < mass.length - 1) {
-                            sb.append(";");
+                        if (i == mass.length - 1) {
+                            sb.append(" ");
                         }
                     }
                 }
                 sb.append(System.lineSeparator());
                 String end = sb.toString();
                 output.setText(end);
+                
             }
             if (rn2.isSelected()) {
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", " ");
 
                     if (!num.equals("")
-                            && (Integer.parseInt(num) % 2) == 1//😵😵😵🤮🤢👌
+                            && (Integer.parseInt(num) % 2) == 1
                             ) {
                         sb.append(answer);
-                        if (i < mass.length - 1) {
-                            sb.append(";");
+                        if (i == mass.length - 1) {
+                            sb.append(" ");
                         }
                     }
                 }
