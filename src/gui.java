@@ -173,6 +173,9 @@ public class gui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void FileSelectbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileSelectbtnActionPerformed
+        /*
+        *Opens a file chooser and readFromFile
+        */
         int returnVal = jFileChooser1.showOpenDialog(this);
         if (returnVal == jFileChooser1.APPROVE_OPTION) {
             File file = jFileChooser1.getSelectedFile();
@@ -187,6 +190,9 @@ public class gui extends javax.swing.JFrame {
     }//GEN-LAST:event_FileSelectbtnActionPerformed
 
     private void savebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savebtnActionPerformed
+        /*
+        *saves content on "output" textArea
+        */
         int returnVal = jFileChooser1.showSaveDialog(this);
         if (returnVal == jFileChooser1.APPROVE_OPTION) {
             File file = jFileChooser1.getSelectedFile();
@@ -208,6 +214,11 @@ public class gui extends javax.swing.JFrame {
     }//GEN-LAST:event_rn0StateChanged
 
     private void filterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterActionPerformed
+        /*
+        *Removes Leters and unchosen numbers from "txta" textArea and put's
+        *them in "output" txtArea 
+        */
+        
         String cvsSplitBy = ";";
         StringBuilder sb = new StringBuilder();
         for (String line : contents) {
@@ -305,6 +316,9 @@ public class gui extends javax.swing.JFrame {
     }
 
     public void readFromFile(String filename) throws FileNotFoundException, IOException {
+        /*
+        *Reads file, add's it to arayList and put's text in "txta" textArea
+        */
         String line = "";
         String cvsSplitBy = ";";
 
@@ -329,8 +343,11 @@ public class gui extends javax.swing.JFrame {
         txta.setText(sb.toString());
 
     }
-
+    
     public void writeFile(String savefile) throws IOException {
+        /*
+        *saves "output" textArea into a file
+        */
         String content = output.getText();
 
         try (FileWriter bf = new FileWriter(savefile)) {
