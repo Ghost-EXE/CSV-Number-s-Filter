@@ -215,7 +215,8 @@ public class gui extends javax.swing.JFrame {
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", " ");
+                    String three = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    String answer = three.replaceAll("(.{3})", "$1 ");
                     sb.append(answer);
                     if (i == mass.length - 1) {
                         sb.append(" ");
@@ -229,7 +230,8 @@ public class gui extends javax.swing.JFrame {
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", " ");
+                    String three = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    String answer = three.replaceAll("(.{3})", "$1 ");
                     if (!num.equals("")
                             && (Integer.parseInt(num) % 2) == 0) {
                         sb.append(answer);
@@ -247,8 +249,8 @@ public class gui extends javax.swing.JFrame {
                 String[] mass = line.split(cvsSplitBy);
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
-                    String answer = num.replaceAll("\\b\\w{1,2}\\b\\s?", " ");
-
+                    String three = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
+                    String answer = three.replaceAll("(.{3})", "$1 ");
                     if (!num.equals("")
                             && (Integer.parseInt(num) % 2) == 1
                             ) {
