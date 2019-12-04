@@ -51,6 +51,7 @@ public class gui extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         output = new javax.swing.JTextArea();
         filter = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CSV Number Filter");
@@ -112,22 +113,27 @@ public class gui extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout BackpnlLayout = new javax.swing.GroupLayout(Backpnl);
         Backpnl.setLayout(BackpnlLayout);
         BackpnlLayout.setHorizontalGroup(
             BackpnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BackpnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(BackpnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(BackpnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(FileSelectbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                     .addComponent(savebtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(rn0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(rn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(rn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(filter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(filter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(BackpnlLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -142,7 +148,9 @@ public class gui extends javax.swing.JFrame {
                         .addComponent(rn1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rn2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
                         .addComponent(FileSelectbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filter, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,6 +227,7 @@ public class gui extends javax.swing.JFrame {
         *them in "output" txtArea 
         */
         
+        
         String cvsSplitBy = ";";
         StringBuilder sb = new StringBuilder();
         for (String line : contents) {
@@ -227,14 +236,17 @@ public class gui extends javax.swing.JFrame {
                 for (int i = 0; i < mass.length; i++) {
                     String num = mass[i].replaceAll("[^0-9.]", "");
                     String three = num.replaceAll("\\b\\w{1,2}\\b\\s?", "");
-                    String answer = three.replaceAll("(.{3})", "$1 ");
+                    String answer = three.replaceAll("(.{3})", "$1 ");             
                     sb.append(answer);
                     if (i == mass.length - 1) {
                         sb.append(" ");
+                     
                     }
                 }
                 sb.append(System.lineSeparator());
                 String end = sb.toString();
+                int count = end.split("\\s").length;   
+                jLabel2.setText(" " +count);
                 output.setText(end);
             }
             if (rn1.isSelected()) {
@@ -253,6 +265,8 @@ public class gui extends javax.swing.JFrame {
                 }
                 sb.append(System.lineSeparator());
                 String end = sb.toString();
+                int count = end.split("\\s").length;   
+                jLabel2.setText(" " +count);
                 output.setText(end);
                 
             }
@@ -273,6 +287,8 @@ public class gui extends javax.swing.JFrame {
                 }
                 sb.append(System.lineSeparator());
                 String end = sb.toString();
+                int count = end.split("\\s").length;   
+                jLabel2.setText(" " +count);
                 output.setText(end);
             }
         }
@@ -360,6 +376,7 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton filter;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea output;
